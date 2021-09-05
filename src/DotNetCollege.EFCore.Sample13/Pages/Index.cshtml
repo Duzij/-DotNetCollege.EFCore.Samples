@@ -1,0 +1,36 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="container">
+
+    @if (!Model.Categories.Any())
+    {
+        <b>Nothing to see here</b>
+    }
+    else
+    {
+        <ul>
+            @foreach (var category in Model.Categories)
+            {
+                <li>@category.Name</li>
+
+                <ul>
+                    @foreach (var product in category.Products)
+                    {
+                        <li>@product.Name</li>
+                    }
+                </ul>
+            }
+        </ul>
+    }
+
+</div>
