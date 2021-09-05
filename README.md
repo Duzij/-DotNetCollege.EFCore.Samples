@@ -7,7 +7,7 @@ Quick intro with Sqlite
 Navigation properties, build-in conventions, tables references, SQL functions and views mapping
 
 ### Sample2
-annotations
+Annotations
 
 ### Sample3
 Initial migration - SqlServer and Sqlite
