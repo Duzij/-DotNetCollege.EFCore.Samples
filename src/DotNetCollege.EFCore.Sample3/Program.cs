@@ -41,7 +41,7 @@ namespace DotNetCollege.EFCore.Sample3
             using (var db = new AppDbContext())
             {
                 var nemcova = db.Authors
-                    .Include(a => a.Books)
+                    //.Include(a => a.Books)
                     //.ThenInclude(ab => ab.Book)
                     .FirstOrDefault(a => a.Id == 1);
                 db.Remove(nemcova);

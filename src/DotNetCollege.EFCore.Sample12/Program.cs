@@ -24,7 +24,7 @@ namespace DotNetCollege.EFCore.Sample12
 
             //ToFunctionAndToSqlQuery();
 
-            //IncludeInsteadOfSelect();
+            IncludeInsteadOfSelect();
 
             //FromSqlInterpolated();
         }
@@ -53,20 +53,29 @@ namespace DotNetCollege.EFCore.Sample12
 
             using (var db = new AppDbContext())
             {
-                var usedCategories = db.Categories
-                    .SelectMany(c => c.Tags, (c, t) => new { CategoryName = c.Name, TagName = t.Name, CategoryId = c.Id });
+                var query = db.Products
+                    .Select(p => new
+                    {
+                        p.Name,
+                        Categories = p.Categories.Select(c => new
+                        {
+                            c.Name,
+                            Tags = c.Tags.Select(t => new
+                            {
+                                t.Name
+                            })
+                        })
+                    });
 
-                var usedCategoriesBetterWay = db.Products
-                    .SelectMany(p => p.Categories, (p, c) => new { ProductName = p.Name, CategoryId = c.Id });
-
-                var query = usedCategoriesBetterWay.Join(usedCategories,
-                    usedCategoriesBetterWay => usedCategoriesBetterWay.CategoryId,
-                    usedCategories => usedCategories.CategoryId,
-                    (pc, ct) => new { pc.ProductName, ct.CategoryName, ct.TagName });
-
-                foreach (var a in query)
+                foreach (var product in query)
                 {
-                    Console.WriteLine(a.ProductName + " " + a.CategoryName + " " + a.TagName);
+                    foreach (var category in product.Categories)
+                    {
+                        foreach (var tag in category.Tags)
+                        {
+                            Console.WriteLine(product.Name + " " + category.Name + " " + tag.Name);
+                        }
+                    }
                 }
             }
         }

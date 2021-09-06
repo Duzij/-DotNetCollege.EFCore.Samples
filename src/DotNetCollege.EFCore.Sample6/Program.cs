@@ -14,10 +14,19 @@ namespace DotNetCollege.EFCore.Sample6
             //EagerLoading();
             //ExplicitLoading();
             //ExplicitVsEagerLoading();
-
+            Batching();
         }
-       
 
+        private static void Batching()
+        {
+            using (var db = new AppDbContext())
+            {
+                db.Products.Add(new Product() { Name = "New product" });
+                db.Products.Add(new Product() { Name = "New product 2" });
+
+                db.SaveChanges();
+            }
+        }
 
         private static void ExplicitVsEagerLoading()
         {
@@ -50,6 +59,8 @@ namespace DotNetCollege.EFCore.Sample6
                     .OrderBy(b => b.Id)
                     .First();
 
+
+
                 db.Entry(category)
                     .Collection(p => p.Products)
                     .Load();
@@ -80,7 +91,7 @@ namespace DotNetCollege.EFCore.Sample6
                 /*
                 Old EF:
                 db.Products
-                    .Include(p => p.Category.CategoryImages.Select(i => i.Tags))
+                   .Include(p => p.Category.CategoryImages.Select(i => i.Tags))
 
                 EF Core:
                 db.Products

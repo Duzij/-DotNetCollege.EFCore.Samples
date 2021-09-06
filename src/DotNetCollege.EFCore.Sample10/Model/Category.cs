@@ -19,7 +19,7 @@ namespace DotNetCollege.EFCore.Sample10.Model
 
         private readonly AppDbContext appDbContext;
 
-        public Category(AppDbContext appDbContext)
+        public Category(AppDbContext appDbContext, string name, string description)
         {
             this.appDbContext = appDbContext;
         }

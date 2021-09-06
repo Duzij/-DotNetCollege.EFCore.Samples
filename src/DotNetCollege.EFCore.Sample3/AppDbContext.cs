@@ -23,7 +23,7 @@ namespace DotNetCollege.EFCore.Sample3
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlite(this.DbPath);
+            //optionsBuilder.UseSqlite($"Data Source={DbPath}");
             optionsBuilder.UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database=DotNetCollege.EFCore.Sample3;Trusted_Connection=True;");
         }
 

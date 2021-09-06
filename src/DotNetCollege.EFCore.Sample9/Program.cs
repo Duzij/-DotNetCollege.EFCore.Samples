@@ -63,7 +63,6 @@ namespace DotNetCollege.EFCore.Sample9
                 Console.WriteLine("Inserting");
                 db.Add(new Product { Name = "Milk", Category = new Category() { Name = "Milk Products" } });
                 db.SaveChanges();
-
             }
 
 

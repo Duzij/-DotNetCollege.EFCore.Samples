@@ -21,6 +21,11 @@ namespace DotNetCollege.EFCore.Sample2
                 .HasComputedColumnSql("isnull(N'Name is '+CONVERT([nvarchar](200),LEN(Name)) + ' chars long',N'*** ERROR ***')");
 
             base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<Product>()
+            //    .HasOne(p => p.Category)
+            //    .WithMany(c => c.P)
+            //    .OnDelete(DeleteBehavior.)
         }
 
         public DbSet<Product> Products { get; set; }

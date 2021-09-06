@@ -44,14 +44,15 @@ namespace DotNetCollege.EFCore.Sample11
             {
                 var query = db.Products
                     .AsEnumerable()
-                    .Select(p => StringUtils.MultiplyStringInput(p.Name, 3));
+                        .Where(p => StringUtils.GetFirstWord(p.Name) == "Milk")
+                        .ToList();
             }
 
             using (var db = new AppDbContext())
             {
                 var query = db.Products
-                        .Where(p => StringUtils.GetFirstWord(p.Name) == "Milk")
-                        .ToList();
+                    .Where(a => a.Name == "Milk")
+                    .Select(p => StringUtils.MultiplyStringInput        (p.Name, 3));
             }
 
         }
@@ -61,10 +62,10 @@ namespace DotNetCollege.EFCore.Sample11
         {
             using (var db = new AppDbContext())
             {
-                //foreach (var product in await db.Products.ToListAsync())
-                //{
-                //    Console.WriteLine(product);
-                //}
+                foreach (var product in db.Products.AsEnumerable())
+                {
+                    Console.WriteLine(product);
+                }
 
                 await foreach (var product in db.Products.AsAsyncEnumerable())
                 {

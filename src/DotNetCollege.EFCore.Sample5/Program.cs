@@ -16,9 +16,8 @@ namespace DotNetCollege.EFCore.Sample5
         {
             Inheritance();
             //LazyLoadingExample();
-            //ClientEvaluation();
+            ClientEvaluation();
 
-            Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
 

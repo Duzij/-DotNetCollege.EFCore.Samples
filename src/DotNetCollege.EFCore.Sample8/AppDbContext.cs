@@ -53,6 +53,7 @@ namespace DotNetCollege.EFCore.Sample8
                 cd.HasData(new CarDetail()
                 {
                     Id = 1,
+                    Manufacturer = "Škoda",
                     Fuel = FuelType.Diesel,
                     Transmission = Transmission.Manual,
                     Model = "Octavia",

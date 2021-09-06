@@ -10,6 +10,7 @@ namespace DotNetCollege.EFCore.Intro
         {
             using (var db = new AppDbContext())
             {
+                db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
                 Console.WriteLine($"Database path: {db.DbPath}.");

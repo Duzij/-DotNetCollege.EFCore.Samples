@@ -1,4 +1,4 @@
-﻿using DotNetCollege.EFCore.Sample12.Model;
+﻿    using DotNetCollege.EFCore.Sample12.Model;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;

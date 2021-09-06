@@ -18,6 +18,7 @@ namespace DotNetCollege.EFCore.Sample8.Model
         [Column("Model")]
         public string Model { get; set; }
 
+        [Column("Manufacturer")]
         public string Manufacturer { get; set; }
 
         public CarDetail CarDetail { get; set; }
@@ -35,7 +36,7 @@ namespace DotNetCollege.EFCore.Sample8.Model
         [Column("Model")]
         public string Model { get; set; }
 
-        //CarDetails own manufacturer
+        [Column("Manufacturer")]
         public string Manufacturer { get; set; }
 
         public Transmission Transmission { get; set; }

@@ -1,6 +1,6 @@
 ﻿using DotNetCollege.EFCore.Sample10;
 using DotNetCollege.EFCore.Sample10.Model;
-
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -36,6 +36,8 @@ namespace DotNetCollege.EFCore.Sample10
         {
             using (var db = new AppDbContext())
             {
+                var query = db.Products.TagWith($"This is product query").ToList();
+
                 //One query
                 foreach (var product in db.Products.ToList())
                 {

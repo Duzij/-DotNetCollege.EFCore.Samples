@@ -16,10 +16,10 @@ namespace DotNetCollege.EFCore.Sample7
                 db.Database.EnsureCreated();
 
                 //Optimistic concurrency
-                //await LoadAndInsertNewValue();
+                await LoadAndInsertNewValue();
 
                 //TPH
-                await AddNewProducts();
+                //await AddNewProducts();
 
             }
         }
@@ -49,7 +49,10 @@ namespace DotNetCollege.EFCore.Sample7
                 Console.ReadKey();
 
                 Console.WriteLine("Changing order summary...");
-                order.Summary = 100;
+
+                order.Summary = 1000;
+
+                var orderEntity = db.Orders.
 
                 await db.SaveChangesAsync();
             }
