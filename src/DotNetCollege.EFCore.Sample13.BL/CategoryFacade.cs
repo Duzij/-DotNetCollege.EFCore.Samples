@@ -29,13 +29,7 @@ namespace DotNetCollege.EFCore.Sample13.BL.Services
         {
             using (var db = dbContextFactory.CreateDbContext())
             {
-                var list = db.Categories
-                    .Include(c => c.Products)
-                    .ToList();
-
                 return db.Categories
-                    .Include(c => c.Products)
-                    .ToList()
                     .Select(c => new CategoryDTO()
                     {
                         Id = c.Id,

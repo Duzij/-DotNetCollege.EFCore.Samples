@@ -42,3 +42,5 @@ DbContextFactory
 ### Sample14
 Property bags
 
+### Sample15
+Transactions and TransactionScope

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DotNetCollege.EFCore.Sample12.Model
 {
-    public class Category
+    public class Owner
     {
         public int Id { get; set; }
-        public  string Name { get; set; }
-
+        public string Name { get; set; }
         public List<Product> Products { get; set; }
-
-        public List<Tag> Tags { get; set; }
     }
 }

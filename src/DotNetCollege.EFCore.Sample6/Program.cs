@@ -59,9 +59,7 @@ namespace DotNetCollege.EFCore.Sample6
                     .OrderBy(b => b.Id)
                     .First();
 
-
-
-                db.Entry(category)
+                db.Entry(category)  
                     .Collection(p => p.Products)
                     .Load();
 

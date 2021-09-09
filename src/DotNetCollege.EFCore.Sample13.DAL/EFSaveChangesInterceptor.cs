@@ -6,16 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNetCollege.EFCore.Sample11.Interceptors
+namespace DotNetCollege.EFCore.Web.DAL
 {
     public class EFSaveChangesInterceptor : SaveChangesInterceptor
     {
-        public EFSaveChangesInterceptor()
+        private readonly ILogger<EFSaveChangesInterceptor> logger;
+
+        public EFSaveChangesInterceptor(ILogger<EFSaveChangesInterceptor> logger)
         {
+            this.logger = logger;
         }
 
         public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
         {
+            logger.LogInformation(eventData.EventIdCode);
             Console.WriteLine(eventData.ToString());
             return base.SavedChanges(eventData, result);
         }

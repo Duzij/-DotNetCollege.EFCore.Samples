@@ -12,6 +12,10 @@ namespace DotNetCollege.EFCore.Sample12.Model
         public string Name { get; set; }
         public string Description { get; set; }
         public List<Category> Categories { get; set; }
+
+        public Owner Owner { get; set; }
+
+        public int? OwnerId { get; set; }
     }
 
 }

@@ -2,6 +2,7 @@
 using DotNetCollege.EFCore.Sample10.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DotNetCollege.EFCore.Sample10
@@ -10,47 +11,42 @@ namespace DotNetCollege.EFCore.Sample10
     {
         static void Main(string[] args)
         {
-            Init();
             LazyLoadingExample();
-        }
-
-        private static void Init()
-        {
-            using (var db = new AppDbContext())
-            {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
-
-                Console.WriteLine("Inserting");
-
-                var category = new Category("Milk Products", "This category is for milk only.");
-                db.Add(category);
-                db.Add(new Product() { Name = "Discount Milk", Category = category });
-                db.Add(new Product() { Name = "Premium Milk", Category = category });
-
-                db.SaveChanges();
-            }
         }
 
         private static void LazyLoadingExample()
         {
             using (var db = new AppDbContext())
             {
-                var query = db.Products.TagWith($"This is product query").ToList();
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
-                //One query
+                var categories = new List<Category>();
+
+                for (int i = 0; i < 5; i++)
+                {
+                    categories.Add(new Category() { Name = "Milk products" + i });
+                }
+
+                for (int a = 0; a < 3; a++)
+                {
+                    db.Products.Add(new Product() { Name = $"Milk{a}", Categories = categories });
+                }
+
+                db.SaveChanges();
+            }
+
+            using (var db = new AppDbContext())
+            {
                 foreach (var product in db.Products.ToList())
                 {
-                    //Another query
-                    if (product.Category != null)
+                    foreach (var category in product.Categories)
                     {
-                        Console.WriteLine(product.Category.Name);
+                        Console.WriteLine($"Product {product.Name}, Category {category.Name}");
                     }
-                    Console.WriteLine(product.Name);
                 }
             }
         }
-
 
     }
 }

@@ -15,7 +15,7 @@ namespace DotNetCollege.EFCore.Sample14
         static void Main(string[] args)
         {
             Init();
-            AddPropertiesToPropertyBag();
+            //AddPropertiesToPropertyBag();
         }
 
         private static void Init()
@@ -27,7 +27,7 @@ namespace DotNetCollege.EFCore.Sample14
 
                 Console.WriteLine("Inserting");
 
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     db.Add(new Product() { Name = "Milk", Category = new Category() { Name = "Milk Products" } });
                 }
@@ -47,6 +47,7 @@ namespace DotNetCollege.EFCore.Sample14
                 {
                     ["LastUpdated"] = now,
                     ["Property"] = "Test",
+                    ["Product"] = new Product() { Name = "new" }
                 };
 
                 db.PropertyBag.Add(dic);

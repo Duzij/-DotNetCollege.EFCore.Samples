@@ -16,8 +16,7 @@ namespace DotNetCollege.EFCore.Sample11
         {
             Init();
             RestrictedClientEvaluation();
-
-            await AsyncEnumberableAsync();
+            //await AsyncEnumberableAsync();
         }
 
         private static void Init()
@@ -29,7 +28,7 @@ namespace DotNetCollege.EFCore.Sample11
 
                 Console.WriteLine("Inserting");
 
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     db.Add(new Product() { Name = "Milk", Category = new Category() { Name = "Milk Products" } });
                 }
@@ -62,7 +61,7 @@ namespace DotNetCollege.EFCore.Sample11
         {
             using (var db = new AppDbContext())
             {
-                foreach (var product in db.Products.AsEnumerable())
+                foreach (var product in await db.Products.ToListAsync())
                 {
                     Console.WriteLine(product);
                 }

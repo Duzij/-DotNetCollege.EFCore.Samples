@@ -43,7 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCollege.EFCore.Sample
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNetCollege.EFCore.Web", "DotNetCollege.EFCore.Web", "{CBA78235-B475-4C45-B663-9A26733E663A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCollege.EFCore.Sample13.BL", "DotNetCollege.EFCore.Sample13.BL\DotNetCollege.EFCore.Sample13.BL.csproj", "{6469009B-0141-4151-99B4-3EE4ED6573D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCollege.EFCore.Sample13.BL", "DotNetCollege.EFCore.Sample13.BL\DotNetCollege.EFCore.Sample13.BL.csproj", "{6469009B-0141-4151-99B4-3EE4ED6573D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCollege.EFCore.Sample15", "DotNetCollege.EFCore.Sample15\DotNetCollege.EFCore.Sample15.csproj", "{BBB27F02-2EB3-4522-94DD-F81E4D1D74C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +129,10 @@ Global
 		{6469009B-0141-4151-99B4-3EE4ED6573D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6469009B-0141-4151-99B4-3EE4ED6573D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6469009B-0141-4151-99B4-3EE4ED6573D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBB27F02-2EB3-4522-94DD-F81E4D1D74C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBB27F02-2EB3-4522-94DD-F81E4D1D74C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBB27F02-2EB3-4522-94DD-F81E4D1D74C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBB27F02-2EB3-4522-94DD-F81E4D1D74C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,7 +37,7 @@ namespace DotNetCollege.EFCore.Sample13.BL.Services
         public Product MapProductToEntity(ProductDTO productDTO, int categoryId)
         {
             var productEntity = new Product();
-            productEntity.Id = productDTO.Id;
+            //productEntity.Id = productDTO.Id;
             productEntity.Name = productDTO.Name;
             productEntity.CategoryId = categoryId;
             productEntity.UserId = userId;
@@ -46,11 +46,9 @@ namespace DotNetCollege.EFCore.Sample13.BL.Services
 
         public void Sync(List<Product> entityProducts, List<ProductDTO> dtoProducts)
         {
-            //get new aded,
-            //get removed
+            //get new added,
+            //get removed,
             //get updated
-
-
 
             //https://github.com/riganti/infrastructure/blob/master/src/Infrastructure/Riganti.Utils.Infrastructure.AutoMapper/SyncByKeyCollectionResolver.cs
         }

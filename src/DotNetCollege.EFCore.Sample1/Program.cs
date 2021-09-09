@@ -18,8 +18,8 @@ namespace DotNetCollege.EFCore.Sample1
         {
             using (var db = new AppDbContext())
             {
-                db.Database.EnsureDeleted();
-                db.Database.Migrate();
+                //db.Database.EnsureDeleted();
+                //db.Database.Migrate();
 
                 Console.WriteLine("Inserting products");
 
@@ -54,6 +54,7 @@ namespace DotNetCollege.EFCore.Sample1
 
                 foreach (var product in products)
                 {
+                    var productsEntryState = db.Entry(product).State;
                     Console.WriteLine($"{product.ProductId}: {product.ProductName}");
                 }
 

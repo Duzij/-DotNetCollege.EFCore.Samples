@@ -16,7 +16,6 @@ namespace DotNetCollege.EFCore.Sample12
         static void Main(string[] args)
         {
             InitNotWorthSplitQuery();
-
             //InitWorthSplitQuery();
 
             //SplitQuery();
@@ -26,7 +25,7 @@ namespace DotNetCollege.EFCore.Sample12
 
             IncludeInsteadOfSelect();
 
-            //FromSqlInterpolated();
+            FromSqlInterpolated();
         }
 
 
@@ -34,12 +33,13 @@ namespace DotNetCollege.EFCore.Sample12
         {
             using (var db = new AppDbContext())
             {
-                var usedCategories = db.Products
+                var products = db.Products
+                    .AsNoTracking()
                     .Include(p => p.Categories)
                     .ThenInclude(c => c.Tags)
                     .ToList();
 
-                foreach (var product in usedCategories)
+                foreach (var product in products)
                 {
                     foreach (var category in product.Categories)
                     {
@@ -86,7 +86,7 @@ namespace DotNetCollege.EFCore.Sample12
             using (var db = new AppDbContext())
             {
                 var products = db.Products
-                    .AsNoTracking()
+                    .AsTracking()
                     .ToList();
             }
         }
@@ -97,32 +97,60 @@ namespace DotNetCollege.EFCore.Sample12
             {
                 var milkCategories = db.Categories
                     .AsNoTracking()
-                    .Include(c => c.Products.Where(p => p.Name.StartsWith("Milk")))
+                    .Include(c => c.Products.Where(p => p.Name.EndsWith("Milk")))
                     .ToList();
+
 
                 var categoriesWithOneProduct = db.Categories
                     .AsNoTracking()
                     .Include(c => c.Products
-                        .OrderBy(p => p.Name)
-                        .ThenBy(p => p.Name)
+                        .OrderBy(c => c.Id)
                         .Take(1))
                     .ToList();
+
+                var orderingThroughLayers = db.Products
+                    .AsNoTracking()
+                    .OrderBy(p => p.Description)
+                    .Include(p => p.Categories.OrderBy(c => c.Name))
+                    .ThenInclude(c => c.Tags.OrderByDescending(t => t.Name))
+                    .ToList();
+
+                //Navigation fixup issue
+
+                var nextQuery2 = db.Categories
+                  .AsNoTracking()
+                  .Include(c => c.Products.Where(p => p.Id < 4))
+                  .ToList();
+
+                var nextQuery = db.Categories
+                    .Include(c => c.Products.Where(p => p.Id < 1))
+                    .ToList();
+
+                //stand-alone predicates only
+                var productsWithSameOwner = db.Owners
+                    .Include(o => o.Products.Where(p => p.Name == o.Name));
+                    //.ToList();
+
+                var productsWithSameOwnerStandAlone = db.Owners
+                    .Include(o => o.Products.Where(p => p.Name == p.Owner.Name))
+                    .ToList();
+
             }
         }
 
 
         private static void SplitQuery()
         {
-            using (var db = new AppDbContext())
-            {
-                var products = db.Products
-                    //.AsNoTracking()
-                    .ToList();
+            //using (var db = new AppDbContext())
+            //{
+            //    var products = db.Products
+            //        //.AsNoTracking()
+            //        .ToList();
 
-                var categories = db.Categories
-                    //.AsNoTracking()
-                    .ToList();
-            }
+            //    var categories = db.Categories
+            //        //.AsNoTracking()
+            //        .ToList();
+            //}
 
             using (var db = new AppDbContext())
             {
@@ -194,20 +222,20 @@ namespace DotNetCollege.EFCore.Sample12
 
                 Console.WriteLine("Inserting");
 
-                var tag = new Tag() { Name = "Tag1" };
-                var tag2 = new Tag() { Name = "Tag2" };
+                var tag = new Tag() { Name = "A Tag" };
+                var tag2 = new Tag() { Name = "B Tag2" };
 
-                var milkProductCategory = new Category() { Name = "Milk Products", Tags = new List<Tag> { tag, tag2 } };
-                var milkProductCategory2 = new Category() { Name = "More Milk Products", Tags = new List<Tag> { tag } };
+                var milkProductCategory = new Category() { Name = "A Milk Products", Tags = new List<Tag> { tag, tag2 } };
+                var milkProductCategory2 = new Category() { Name = "B Milk Products", Tags = new List<Tag> { tag, tag2 } };
+                var milkProductCategory3 = new Category() { Name = "Other Products", Tags = new List<Tag> { tag, tag2 } };
 
                 db.Add(milkProductCategory);
                 db.Add(milkProductCategory2);
+                db.Add(milkProductCategory3);
 
-                db.Add(new Product() { Name = "Milk", Categories = new List<Category> { milkProductCategory, milkProductCategory2 } });
-                db.Add(new Product() { Name = "Milk", Categories = new List<Category> { milkProductCategory2 } });
-                db.Add(new Product() { Name = "Milk", Categories = new List<Category> { milkProductCategory } });
-                db.Add(new Product() { Name = "Milk", Categories = new List<Category> { milkProductCategory2 } });
-                db.Add(new Product() { Name = "Milk", Categories = new List<Category> { milkProductCategory } });
+                db.Add(new Product() { Name = "A Milk", Description = "A Milk description", Categories = new List<Category> { milkProductCategory, milkProductCategory2 } });
+                db.Add(new Product() { Name = "B Milk", Description = "Milk description", Categories = new List<Category> { milkProductCategory2 } });
+                db.Add(new Product() { Name = "C Milk", Description = "Milk description", Categories = new List<Category> { milkProductCategory } });
 
 
                 db.SaveChanges();
@@ -228,7 +256,7 @@ namespace DotNetCollege.EFCore.Sample12
                 var identifierAsString = "105; DROP TABLE [dbo].[Tags]";
 
                 var dangerousQuery = db.Products
-                    .FromSqlInterpolated($"SELECT * FROM dbo.Products where Id > {identifierAsString}")
+                    .FromSqlInterpolated($"SELECT * FROM dbo.Products where Name = {identifierAsString}")
                     .OrderBy(b => b.Name)
                     .ToList();
 

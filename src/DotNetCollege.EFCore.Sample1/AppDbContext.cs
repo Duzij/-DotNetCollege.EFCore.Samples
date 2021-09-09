@@ -1,8 +1,9 @@
-﻿using DotNetCollege.EFCore.Sample1.Model;
+﻿using DotNetCollege.EFCore.Sample01;
+using DotNetCollege.EFCore.Sample1.Model;
 using DotNetCollege.EFCore.Sample1.ModelConfiguration;
 
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,8 @@ namespace DotNetCollege.EFCore.Sample1
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.ReplaceService<IProviderConventionSetBuilder, CustomSetBuilder>();
+
             optionsBuilder.UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database=DotNetCollege.EFCore.Sample1;Trusted_Connection=True;");
         }
 
@@ -38,7 +41,9 @@ namespace DotNetCollege.EFCore.Sample1
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Data annotation override
-            modelBuilder.Entity<Product>().Property(p => p.Name).IsRequired(false);
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Name)
+                .IsRequired(false);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryEntityConfiguration).Assembly);
 

@@ -22,6 +22,8 @@ namespace DotNetCollege.EFCore.Sample3
             {
                 db.Database.EnsureDeleted();
 
+                var book = db.Books.Find(1);
+                
                 if (db.Database.GetMigrations().Any())
                 {
                     db.Database.Migrate();
@@ -41,8 +43,6 @@ namespace DotNetCollege.EFCore.Sample3
             using (var db = new AppDbContext())
             {
                 var nemcova = db.Authors
-                    //.Include(a => a.Books)
-                    //.ThenInclude(ab => ab.Book)
                     .FirstOrDefault(a => a.Id == 1);
                 db.Remove(nemcova);
 

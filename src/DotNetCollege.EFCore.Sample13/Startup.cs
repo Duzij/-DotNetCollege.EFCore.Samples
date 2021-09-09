@@ -1,5 +1,6 @@
 using DotNetCollege.EFCore.Sample13.BL.Services;
 using DotNetCollege.EFCore.Sample13.DAL;
+using DotNetCollege.EFCore.Web.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,9 +39,11 @@ namespace DotNetCollege.EFCore.Sample13
 
 
             //needed to add both for Identity services
-            services.AddScoped(p => p.GetRequiredService<IDbContextFactory<AppDbContext>>().CreateDbContext());
+            services.AddTransient(p => p.GetRequiredService<IDbContextFactory<AppDbContext>>().CreateDbContext());
 
             services.AddDbContextFactory<AppDbContext>(options => {
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
                 options.EnableSensitiveDataLogging();
                 options.LogTo(Console.WriteLine, LogLevel.Information);
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -88,15 +91,15 @@ namespace DotNetCollege.EFCore.Sample13
             });
 
 
-            using (app.ApplicationServices.CreateScope())
-            {
-                var context = app.ApplicationServices.GetRequiredService<IDbContextFactory<AppDbContext>>();
-                using (var db = context.CreateDbContext())
-                {
-                    db.Database.EnsureDeleted();
-                    db.Database.EnsureCreated();
-                }
-            }
+            //using (app.ApplicationServices.CreateScope())
+            //{
+            //    var context = app.ApplicationServices.GetRequiredService<IDbContextFactory<AppDbContext>>();
+            //    using (var db = context.CreateDbContext())
+            //    {
+            //        db.Database.EnsureDeleted();
+            //        db.Database.EnsureCreated();
+            //    }
+            //}
 
         }
     }
