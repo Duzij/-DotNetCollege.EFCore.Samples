@@ -13,9 +13,9 @@ namespace DotNetCollege.EFCore.Sample10.Model
 
         public int Id { get; set; }
 
-        public readonly string Name;
+        public string Name { get; set; }
 
-        public readonly string Description;
+        public string Description { get; set; }
 
         private readonly AppDbContext appDbContext;
 

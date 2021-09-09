@@ -15,7 +15,7 @@ namespace DotNetCollege.EFCore.Sample10.Model
         [Column(TypeName = "nvarchar(100)")]
         public ProductStatus Status { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual List<Category> Categories { get; set; }
     }
 
     public enum ProductStatus

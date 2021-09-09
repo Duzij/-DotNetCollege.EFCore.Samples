@@ -52,8 +52,6 @@ namespace DotNetCollege.EFCore.Sample7
 
                 order.Summary = 1000;
 
-                var orderEntity = db.Orders.
-
                 await db.SaveChangesAsync();
             }
         }

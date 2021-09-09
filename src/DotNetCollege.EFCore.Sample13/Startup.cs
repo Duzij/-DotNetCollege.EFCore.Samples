@@ -1,6 +1,5 @@
 using DotNetCollege.EFCore.Sample13.BL.Services;
 using DotNetCollege.EFCore.Sample13.DAL;
-using DotNetCollege.EFCore.Web.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
